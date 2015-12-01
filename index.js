@@ -18,21 +18,22 @@ app.use(function(request,response, next){
    next();
 });
 
-app.get('/AddressBook', function (request, response) {
+app.get('/AddressBook/:ID', function (request, response) {
     console.log(request.accountId);
-    connection.query('select * from AddressBook where accountId ='+request.accountId, function(error,result){
-        if(error){
-            console.log('error');
+    connection.query("select * from AddressBook where accountId ='"+request.params.ID+"'", function(error,result){
+        if (error) throw error;
+        if(result.length <1){
+            response.json('404 Not Found');
         }
-        else if (result){
-          //  console.log(result);
-            response.json(result);
-        }
+         else{
+        
+        response.json(result);
+         }
     });
-    connection.end();
+  
 });
 
-
+// connection.end();
 
 /* YOU DON'T HAVE TO CHANGE ANYTHING BELOW THIS LINE :) */
 
