@@ -33,6 +33,25 @@ app.get('/AddressBook/:ID', function (request, response) {
   
 });
 
+
+app.post('/AddressBook/', function (request, response) {
+    if(request.body){
+        connection.query("insert into AddressBook set name ='"+ request.body.name+"', accountId ="+request.accountId, function(error,result){
+            if (error) response.sendStatus(404);
+            
+            response.send(result);
+             
+        });        
+    }
+    else {
+        response.sendStatus(404);
+    }
+ //   var name = request.body.name;
+
+  
+});
+
+
 // connection.end();
 
 /* YOU DON'T HAVE TO CHANGE ANYTHING BELOW THIS LINE :) */
