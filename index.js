@@ -56,10 +56,33 @@ app.delete('/delete/AddressBook/:id', function(request, response){
         console.log(result);
         response.json(result);
         if(result.affectedRows === 0){
+            response.status(404).send();
             console.log("\n-----INVALID ACCOUNT ID-----\n");
         }
     });
 });
+
+
+app.put('/AddressBook/:id', function(request, response) {
+
+  connection.query("UPDATE AddressBook SET name = '" + request.body.name + "' WHERE '" + request.params.id +"' = AddressBook.id AND AddressBook.accountId='" + request.accountId +"'", function(err, result){
+    if(err) throw err;
+    if(result.affectedRows === 0){
+        request.status(404).send();
+        console.log(result);
+    }else{
+        request.json(result);
+        console.log(result);
+    }
+    
+    });
+    
+});
+
+
+
+
+
 
 
 // connection.end();
