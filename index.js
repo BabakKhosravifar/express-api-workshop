@@ -47,8 +47,18 @@ app.post('/AddressBook/', function (request, response) {
         response.sendStatus(404);
     }
  //   var name = request.body.name;
+});
 
-  
+app.delete('/delete/AddressBook/:id', function(request, response){
+
+    connection.query("DELETE FROM AddressBook WHERE AddressBook.id='" + request.params.id + "' AND AddressBook.accountId='" + request.body.accountId + "'", function(err, result){
+        if(err) throw err;
+        console.log(result);
+        response.json(result);
+        if(result.affectedRows === 0){
+            console.log("\n-----INVALID ACCOUNT ID-----\n");
+        }
+    });
 });
 
 
