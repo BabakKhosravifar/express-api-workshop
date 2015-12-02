@@ -81,8 +81,16 @@ app.put('/AddressBook/:id', function(request, response) {
 
 
 
-
-
+app.post('/Entries/:id', function(request, res) {
+ 
+                connection.query("INSERT into Entry (addressbookId, firstName, lastName, birthday) values (" + request.params.id + ',"' + request.body.firstName + '","' + request.body.lastName + '","' + request.body.birthday + '")', function(err, result) {
+                    if(err){
+                        res.status(404).send(err);
+                    }
+                   res.json(result);
+        });
+   
+});
 
 
 // connection.end();
